@@ -27,6 +27,7 @@ spec:
         limits:
           cpu: "1000m"
           memory: "256Mi"
+
       # called every 10 seconds
       # more than 3 failures results in restart
       livenessProbe:
@@ -37,6 +38,18 @@ spec:
         timeoutSeconds: 1
         periodSeconds: 10
         failureThreshold: 3
+
+      # called every 10 seconds
+      # more than 3 failures results in restart
+      readinessProbe:
+        httpGet:
+          path: /ready
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+
       # ports to publish on pod
       ports:
         - containerPort: 8080
