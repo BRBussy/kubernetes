@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kuard
+spec:
+  # define volumes available for mount in containers
+  volumes:
+    - name: "kuard-data"
+      hostPath:
+        path: "/var/lib/kuard"
+  # define containers which will run in pod
+  containers:
+    - image: brbussy/kuard-amd64:1
+      name: kuard
+      # volumes mounted into container
+      volumeMounts:
+        - mountPath: "/data"
+          name: "kuard-data"
+      # resource requests and limits
+      # used by scheduler to assign resources to node
+      resources:
+        # minimum required resources
+        requests:
+          cpu: "500m"
+          memory: "128Mi"
+        # maximum allowed resources
+        limits:
+          cpu: "1000m"
+          memory: "256Mi"
+      # called every 10 seconds
+      # more than 3 failures results in restart
+      livenessProbe:
+        httpGet:
+          path: /healthy
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+      # ports to publish on pod
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
