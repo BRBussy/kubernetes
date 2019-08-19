@@ -1,0 +1,7 @@
+#
+# external service located at an ip
+#
+kind: Service
+apiVersion: v1
+metadata:
+  name: 110.123.12.23
