@@ -95,8 +95,8 @@ spec:
                 - /usr/bin/mongo
                 - --eval
                 - db.serverStatus()
-              initialDelaySeconds: 10
-              timeoutSeconds: 10
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
 
         # This container initializes the mongodb server, then sleeps.
         - name: init-mongo
