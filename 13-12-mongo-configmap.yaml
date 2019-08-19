@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: mongo-init
 data:
-  init.sh |
+  init.sh: |
     #!/bin/bash
 
     # Need to wait for the readiness health check to pass so that the
