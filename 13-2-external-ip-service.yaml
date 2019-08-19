@@ -1,5 +1,8 @@
 #
 # external service located at an ip
+# an A record will be created for service
+# requests will go straight to ip
+# no balancing across multiple end points
 #
 kind: Service
 apiVersion: v1

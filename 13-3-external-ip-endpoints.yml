@@ -1,0 +1,13 @@
+#
+# External service with multiple end points
+# kubernetes will load balance across endpoints
+#
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: external-ip-database
+subnets:
+  - addresses:
+      - ip: 192.168.0.1 # 1 or more ip addresses
+    ports:
+      - port: 3306

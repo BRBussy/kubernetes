@@ -1,5 +1,6 @@
 #
 # example of creating and external service file
+# a CNAME record will be created for service
 #
 kind: Service
 apiVersion: v1
