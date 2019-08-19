@@ -1,3 +1,5 @@
+# created with:
+# kubectl get deployments nginx --export -o yaml > nginx-deployment.yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
