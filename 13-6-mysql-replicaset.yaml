@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: mysql
+  # labels so that we can bind a service to this pod
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: database
+          image: mysql
+          # resources:
+          #   requests:
+          #     cpu: 1
+          #     memory: 2Gi
+          env:
+            # Environment variables are not a best practice for security,
+            # but we're using them here for brevity in the example.
+            # See Chapter 11 for better options.
+            - name: MYSQL_ROOT_PASSWORD
+              value: admin123
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: database
+              # /var/lib/mysql is where MySQL stores its databases
+              mountPath: "/var/lib/mysql"
+      volumes:
+        - name: database
+          persistentVolumeClaim:
+            claimName: bernard-tut-db
+# mysql -u root -p; // then enter password
+# create database <name>;
+# use <name>;
+# CREATE TABLE <tableName> ( id smallint unsigned not null auto_increment, name varchar(20) not null, constraint pk_example primary key (id) );
+# INSERT INTO <tableName> ( id, name ) VALUES ( null, 'Sample data' );
+# show databases;
+# select * from <tableName>;
+
